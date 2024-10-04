@@ -1,34 +1,24 @@
 package com.example.security.Spring_Security.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Table(name = "roles")
-public class Role {
+public class Role{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Integer roleId;
 
@@ -42,7 +32,7 @@ public class Role {
     @ToString.Exclude
     private Set<User> users = new HashSet<>();
 
-    public Role(AppRole roleName){
+    public Role(AppRole roleName) {
         this.roleName = roleName;
     }
 }
