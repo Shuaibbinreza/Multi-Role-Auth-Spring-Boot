@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,8 +18,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -44,13 +47,14 @@ public class User {
     private String userName;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 50)
+    @Email
     @Column(name = "email")
     private String email;
 
-    @NotBlank
     @Size(max = 120)
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     private boolean accountNonLocked = true;
@@ -65,7 +69,7 @@ public class User {
     private boolean isTwoFactorEnabled = false;
     private String signUpMethod;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @JsonBackReference
     @ToString.Exclude
