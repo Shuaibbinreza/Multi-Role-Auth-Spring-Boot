@@ -8,6 +8,7 @@ import com.example.security.Spring_Security.repository.RoleRepository;
 import com.example.security.Spring_Security.repository.UserRepository;
 import com.example.security.Spring_Security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
